@@ -4,7 +4,7 @@ using LeetCode;
 
 Day6 day = new Day6();
 
-TreeNode node1 = new TreeNode(27);
+TreeNode node1 = new TreeNode(25);
 TreeNode node2 = new TreeNode(56);
 TreeNode node3 = new TreeNode(19, null, node1);
 

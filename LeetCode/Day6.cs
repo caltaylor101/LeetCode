@@ -6,18 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCode
 {
-    public class TreeNode
-    {
-        public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
-        {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
+
     internal class Day6
     {
         public IList<IList<int>> LevelOrder(TreeNode root)
@@ -126,53 +115,137 @@ namespace LeetCode
 
             return true;
         }
-        public bool IsValidBST(TreeNode root)
+
+
+        public bool IsValidBSTBFS(TreeNode root)
         {
-            Queue<TreeNode> q = new Queue<TreeNode>();
-            TreeNode lastNode = root;
-            TreeNode lastlastNode = root;
-            TreeNode lastlastlastNode = root;
-            TreeNode currentNode = root;
-            q.Enqueue(root);
-            int counter = 0;
+            Queue<MyNode> q = new Queue<MyNode>();
+            MyNode current = new MyNode(root, long.MinValue, long.MaxValue);
+            q.Enqueue(current);
 
-            while (q.TryDequeue(out currentNode) && currentNode != null)
+            while (q.TryDequeue(out current) && current != null)
             {
-                if (currentNode == root)
+                if (current.node.val >= current.max || current.node.val <= current.min) return false;
+                if (current.node.left != null)
                 {
-                    if (currentNode.left != null && currentNode.left.val < currentNode.val) q.Enqueue(currentNode.left);
-                    else if (currentNode.left != null && currentNode.left.val >= currentNode.val) return false;
-                    if (currentNode.right != null && currentNode.right.val > currentNode.val) q.Enqueue(currentNode.right);
-                    else if (currentNode.right != null && currentNode.right.val <= currentNode.val) return false;
+                    if (current.node.left.val < current.node.val)
+                    {
+                        q.Enqueue(new MyNode(current.node.left, current.min, current.node.val));
+                    }
+                    else return false;
                 }
-                else
+                if (current.node.right != null)
                 {
-                    if (currentNode.left != null)
+                    if (current.node.right.val > current.node.val)
                     {
-                        if (currentNode.left.val >= currentNode.val) return false;
-                        if (currentNode == lastlastNode.right && currentNode.left.val <= lastlastNode.val) return false;
-                        if (currentNode == lastlastlastNode.right && currentNode.left.val <= lastlastlastNode.val) return false;
-                        if (currentNode == lastNode.right && currentNode.left.val <= lastNode.val) return false;
-                        if (currentNode.left.val < currentNode.val) q.Enqueue(currentNode.left);
+                        q.Enqueue(new MyNode(current.node.right, current.node.val, current.max));
                     }
-                    if (currentNode.right != null)
-                    {
-                        if (currentNode.right.val <= currentNode.val) return false;
-                        if (currentNode == lastlastNode.left && currentNode.right.val >= lastlastNode.val) return false;
-                        if (currentNode == lastlastlastNode.left && currentNode.right.val >= lastlastlastNode.val) return false;
-                        if (currentNode == lastNode.left && currentNode.right.val >= lastNode.val) return false;
-                        if (currentNode.right.val > currentNode.val) q.Enqueue(currentNode.right);
-                    }
+                    else return false;
                 }
-
-                lastlastlastNode = lastlastNode;
-                lastlastNode = lastNode;
-                lastNode = currentNode;
-                counter++;
-                
             }
             return true;
         }
 
+
+        public bool InOrder(TreeNode node, long min, long max)
+        {
+            if (node.left != null && !InOrder(node.left, min, node.val))
+            {
+                return false;
+            }
+
+            if (node.val >= max || node.val <= min)
+            {
+                return false;
+            }
+
+            if (node.right != null && !InOrder(node.right, node.val, max))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public bool IsValidBST(TreeNode root)
+        {
+            long min = long.MinValue;
+            long max = long.MaxValue;
+
+
+            return PostOrder(root, min, max);
+        }
+
+        public bool PreOrder(TreeNode node, long min, long max)
+        {
+            if (node.val >= max || node.val <= min)
+            {
+                return false;
+            }
+
+            if (node.left != null && !PreOrder(node.left, min, node.val))
+            {
+                return false;
+            }
+
+            if (node.right != null && !PreOrder(node.right, node.val, max))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        List<int> testList = new List<int>();
+        public bool PostOrder(TreeNode node, long min, long max)
+        {
+            if (node.left != null && !PostOrder(node.left, min, node.val))
+            {
+                return false;
+            }
+            if (node.right != null && !PostOrder(node.right, node.val, max))
+            {
+                return false;
+            }
+
+            if (node.val <= min || node.val >= max)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        
+
+
+        
+    }
+
+    public class MyNode
+    {
+        public TreeNode node;
+        public long min;
+        public long max;
+        public MyNode(TreeNode node, long min = long.MinValue, long max = long.MaxValue)
+        {
+            this.node = node;
+            this.min = min;
+            this.max = max;
+        }
+    }
+
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+        {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
+
+
+
