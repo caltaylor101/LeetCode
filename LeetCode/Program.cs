@@ -41,5 +41,14 @@ TreeNode node6 = new TreeNode(32, node5, node4);*/
 
 Console.WriteLine(day.NumIslands(islandLands));*/
 
-Console.WriteLine(day.Fib(6));
+DataStructures data = new DataStructures();
+const int m = 3;
+const int n = 3;
+/*int[] nums1 = new int[m + n] { 4, 5, 6, 0, 0, 0 };
+int[] nums2 = new int[] { 1, 2, 3 };*/
+int[] nums1 = new int[] { 4,5,6,0,0,0 };
+int[] nums2 = new int[] { 1,2,3 };
+
+data.Merge3(nums1, m, nums2, n);
+
 

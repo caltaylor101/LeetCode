@@ -8,6 +8,33 @@ namespace LeetCode
 {
     internal class Day9
     {
+        private Dictionary<int, int> cache = new Dictionary<int, int>();
+        public int ClimbStairs(int n)
+        {
+            if (n == 1 || n == 2)
+            {
+                return n;
+            }
+            return RecurseStairs(n);
+        }
+        public int RecurseStairs(int n)
+        {
+            if (n < 0) return 0;
+            if (cache.ContainsKey(n))
+            {
+                return cache[n];
+            }
+            if (n == 0) return 1;
+            if (n == 1) return 1;
+            int result = RecurseStairs(n - 1) + RecurseStairs(n - 2) + RecurseStairs(n-3);
+            if (!cache.ContainsKey(n))
+            {
+                cache.Add(n, result);
+            }
+            return result;
+        }
+
+
         private bool srDone;
         private bool scDone;
         /*public int[][] FloodFill2(int[][] image, int sr, int sc, int color)
@@ -138,17 +165,17 @@ namespace LeetCode
             }
             return nextNumber;
         }*/
-        private Dictionary<int, int> cache = new Dictionary<int, int>();
+        private Dictionary<int, int> cacheFib = new Dictionary<int, int>();
         public int Fib(int n)
         {
-            if (this.cache.ContainsKey(n))
+            if (this.cacheFib.ContainsKey(n))
             {
-                return this.cache[n];
+                return this.cacheFib[n];
             }
 
             if (n == 0)
             {
-                return 0;
+                return 1;
             }
 
             if (n == 1)
@@ -157,13 +184,9 @@ namespace LeetCode
             }
 
             var result = this.Fib(n - 1) + this.Fib(n - 2);
-            if (result == 0)
+            if (!this.cacheFib.ContainsKey(n))
             {
-                Console.WriteLine("AAAAH!");
-            }
-            if (!this.cache.ContainsKey(n))
-            {
-                this.cache[n] = result;
+                this.cacheFib[n] = result;
             }
 
             return result;
