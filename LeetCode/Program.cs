@@ -31,7 +31,7 @@ TreeNode node6 = new TreeNode(32, node5, node4);*/
     new int[] {0,0,0}
 };*/
 
-char[][] islandLands = new char[][]
+/*char[][] islandLands = new char[][]
 {
     new char[] {'1','1','1', '0','0'},
     new char[] {'0','0','0', '1','1'},
@@ -39,5 +39,7 @@ char[][] islandLands = new char[][]
     new char[] {'0','1','0', '0','0'}
 };
 
-Console.WriteLine(day.NumIslands(islandLands));
+Console.WriteLine(day.NumIslands(islandLands));*/
+
+Console.WriteLine(day.Fib(6));
 

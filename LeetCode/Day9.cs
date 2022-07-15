@@ -114,6 +114,61 @@ namespace LeetCode
             return islands;
         }
 
+        /*public int Fib(int n)
+        {
+            if (n == 0) return 0;
+            if (n == 1)
+            {
+                return 1;
+            }
+            if (n == 2)
+            {
+                return 1;
+            }
+            int lastNumber = 1;
+            int swap = 0;
+            int nextNumber = 1;
+            int counter = 2;
+            while (counter < n)
+            {
+                swap = lastNumber;
+                lastNumber = nextNumber;
+                nextNumber += swap;
+                counter++;
+            }
+            return nextNumber;
+        }*/
+        private Dictionary<int, int> cache = new Dictionary<int, int>();
+        public int Fib(int n)
+        {
+            if (this.cache.ContainsKey(n))
+            {
+                return this.cache[n];
+            }
+
+            if (n == 0)
+            {
+                return 0;
+            }
+
+            if (n == 1)
+            {
+                return 1;
+            }
+
+            var result = this.Fib(n - 1) + this.Fib(n - 2);
+            if (result == 0)
+            {
+                Console.WriteLine("AAAAH!");
+            }
+            if (!this.cache.ContainsKey(n))
+            {
+                this.cache[n] = result;
+            }
+
+            return result;
+        }
+
         public int RecurseIsland(char[][] grid, int x, int y)
         {
             if (x-1 >= 0 && grid[x - 1][y] == '1')
