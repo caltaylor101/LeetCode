@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using LeetCode;
-
+using System.Text;
 
 Day9 day = new Day9();
 /*
@@ -46,9 +46,82 @@ const int m = 3;
 const int n = 3;
 /*int[] nums1 = new int[m + n] { 4, 5, 6, 0, 0, 0 };
 int[] nums2 = new int[] { 1, 2, 3 };*/
-int[] nums1 = new int[] { 4,5,6,0,0,0 };
-int[] nums2 = new int[] { 1,2,3 };
+int[] nums1 = new int[] { 1,2,2,1};
+int[] nums2 = new int[] { 2,2 };
 
-data.Merge3(nums1, m, nums2, n);
+InterviewPrepQuestions inter = new InterviewPrepQuestions();
 
+ListNode node1 = new ListNode(3);
+ListNode node2 = new ListNode(4, node1);
+ListNode head = new ListNode(2, node2);
+
+ListNode node5 = new ListNode(9);
+ListNode node3 = new ListNode(4);
+ListNode node4 = new ListNode(6, node3);
+ListNode head2 = new ListNode(5, node4);
+
+
+/*ListNode node1 = new ListNode(1);
+ListNode node2 = new ListNode(0, node1);
+ListNode node3 = new ListNode(0, node2);
+ListNode node4 = new ListNode(0, node3);
+ListNode node5 = new ListNode(0, node4);
+ListNode node6 = new ListNode(0, node5);
+ListNode node7 = new ListNode(0, node6);
+ListNode node8 = new ListNode(0, node7);
+ListNode node9 = new ListNode(0, node8);
+ListNode node10 = new ListNode(0, node9);
+ListNode node11 = new ListNode(0, node10);
+ListNode node12 = new ListNode(0, node11);
+ListNode node13 = new ListNode(0, node12);
+ListNode node14 = new ListNode(0, node13);
+ListNode node15 = new ListNode(0, node14);
+ListNode node16 = new ListNode(0, node15);
+ListNode node17 = new ListNode(0, node16);
+ListNode node18= new ListNode(0, node17);
+ListNode node19= new ListNode(0, node18);
+ListNode node20= new ListNode(0, node19);
+ListNode node21= new ListNode(0, node20);
+ListNode node22= new ListNode(0, node21);
+ListNode node23= new ListNode(0, node22);
+ListNode node24= new ListNode(0, node23);
+ListNode node25= new ListNode(0, node24);
+ListNode node26= new ListNode(0, node25);
+ListNode node27= new ListNode(0, node26);
+ListNode node28= new ListNode(9, node27);
+ListNode node29= new ListNode(9, node28);
+ListNode node30= new ListNode(0, node29);
+
+ListNode head = new ListNode(1, node30);
+
+ListNode node31 = new ListNode(9);
+ListNode node32 = new ListNode(6, node31);
+ListNode head2 = new ListNode(5, node32);*/
+/*
+
+ListNode node1 = new ListNode(9);
+ListNode node2 = new ListNode(9, node1);
+ListNode node3 = new ListNode(9, node2);
+ListNode node4 = new ListNode(9, node3);
+ListNode node5 = new ListNode(9, node4);
+ListNode node6 = new ListNode(9, node5);
+ListNode head = new ListNode(9, node6);
+
+ListNode node7 = new ListNode(9);
+ListNode node8 = new ListNode(9, node7);
+ListNode node9 = new ListNode(9, node8);
+ListNode head2 = new ListNode(9, node9);*/
+
+
+/*ListNode head = new ListNode(5);
+ListNode head2 = new ListNode(5);*/
+
+
+ListNode tmp = inter.AddTwoNumbers(head, head2);
+
+while (tmp != null)
+{
+    Console.WriteLine(tmp.val);
+    tmp = tmp.next;
+}
 
