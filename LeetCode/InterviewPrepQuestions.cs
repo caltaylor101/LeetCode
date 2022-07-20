@@ -18,7 +18,134 @@ namespace LeetCode
     }
     internal class InterviewPrepQuestions
     {
-        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+
+        private int islandCount = 0;
+
+        public int NumIslands(char[][] grid)
+        {
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == '1')
+                    {
+                        islandCount += DestroyIsland(grid, i, j);
+                    }
+                }
+            }
+            return islandCount;
+        }
+
+        public int DestroyIsland(char[][] grid, int vertical, int horizontal)
+        {
+
+                bool up = vertical - 1 >= 0 && grid[vertical - 1][horizontal] == '1';
+                bool down = vertical + 1 < grid.Length && grid[vertical + 1][horizontal] == '1';
+                bool left = horizontal - 1 >= 0 && grid[vertical][horizontal - 1] == '1';
+                bool right = horizontal + 1 < grid[vertical].Length && grid[vertical][horizontal + 1] == '1';
+                // vertical Destruction
+                if (up)
+                {
+                    grid[vertical - 1][horizontal] = '0';
+                    DestroyIsland(grid, vertical - 1, horizontal);
+                }
+                if (down)
+                {
+                    grid[vertical + 1][horizontal] = '0';
+                    DestroyIsland(grid, vertical + 1, horizontal);
+                }
+                if (left)
+                {
+                    grid[vertical][horizontal - 1] = '0';
+                    DestroyIsland(grid,vertical, horizontal - 1);
+                }
+                if (right)
+                {
+                    grid[vertical][horizontal + 1] = '0';
+                    DestroyIsland(grid, vertical, horizontal + 1);
+                } 
+
+                return 1;
+        }
+
+        public int LengthOfLongestSubstring(string s)
+        {
+            HashSet<char> uniqueChars = new HashSet<char>();
+            int maxStringLength = 0;
+            int hashIndex = 0;
+            int copyIndex = 0;
+
+            if (s == null || s == "") return 0;
+
+            while (hashIndex < s.Length)
+            {
+                if (!uniqueChars.Contains(s[hashIndex]))
+                {
+                    uniqueChars.Add(s[hashIndex]);
+                    hashIndex++;
+                    if (maxStringLength < (hashIndex - copyIndex))
+                    {
+                        maxStringLength = hashIndex - copyIndex;
+                    }
+                }
+                else
+                {
+                    uniqueChars.Remove(s[copyIndex]);
+                    copyIndex++;
+                }
+            }
+
+            return maxStringLength;
+
+
+        }
+        public int LengthOfLongestSubstring2(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            List<char> list = new List<char>();
+            int largestString = 1;
+
+            if (s=="")
+            {
+                return 0;
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dict.TryAdd(s[i], i))
+                {
+                    list.Add(s[i]);
+                }
+                else
+                {
+                    if (largestString < list.Count)
+                    {
+                        largestString = list.Count;
+                    }
+                    if (list[0] == s[i])
+                    {
+                        list.Remove(list[0]);
+                    }
+                    else
+                    {
+                        while (list[0] != s[i])
+                        {
+                            list.Remove(list[0]);
+                        }
+                        list.Remove(list[0]);
+                    }
+                    dict.Clear();
+                    dict = list.ToDictionary(x => x, x => 0);
+                    if (dict.TryAdd(s[i], i))
+                    {
+                        list.Add(s[i]);
+                    }
+                }
+            }
+            return (largestString < list.Count) ? list.Count : largestString;
+        }
+
+        public ListNode AddTwoNumbers2(ListNode l1, ListNode l2)
         {
             ListNode tmp = new ListNode(0);
             ListNode head = tmp;

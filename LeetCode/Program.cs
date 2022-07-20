@@ -115,13 +115,21 @@ ListNode head2 = new ListNode(9, node9);*/
 
 /*ListNode head = new ListNode(5);
 ListNode head2 = new ListNode(5);*/
-
-
-ListNode tmp = inter.AddTwoNumbers(head, head2);
-
-while (tmp != null)
+/*
+char[][] grid = new char[][]
 {
-    Console.WriteLine(tmp.val);
-    tmp = tmp.next;
-}
+  new char[] {'1', '1', '1', '1', '0' },
+  new char[] {'1', '1', '0', '1', '0' },
+  new char[] {'1', '1', '0', '0', '0' },
+  new char[] {'0', '0', '1', '0', '1' }
+};*/
+char[][] grid = new char[][]
+{
+  new char[] {'1', '1', '1' },
+  new char[] {'0', '1', '0'},
+  new char[] {'1', '1', '1'}
+};
+
+
+Console.WriteLine(inter.NumberOfIslands(grid));
 
