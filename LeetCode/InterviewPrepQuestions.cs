@@ -16,8 +16,106 @@ namespace LeetCode
             this.next = next;
         }
     }
+
+    public class Node
+    {
+        public int val;
+        public Node next;
+        public Node random;
+
+        public Node(int _val = 0, Node next = null, Node random = null)
+        {
+            this.val = _val;
+            this.next = next;
+            this.random = random;
+        }
+    }
+/*
+    public class MyNode
+    {
+        public int val;
+        public MyNode next;
+        public Node random;
+
+        public MyNode(int _val, MyNode next = null, MyNode random = null)
+        {
+            val = _val;
+            next = null;
+            random = null;
+        }
+    }*/
+
+
     internal class InterviewPrepQuestions
     {
+        public Node CopyRandomList(Node head)
+        {
+            // take care of the null case
+            if (head == null) return head;
+            // The new node we create to traverse our copy list.
+            Node copyNode;
+            // This gets our main list's head so we can traverse through it multiple times.
+            Node currentNode = head;
+            // The currentCopyNode is initialized here. 
+            // This is going to be the exact copy of currentNode.
+            Node currentCopyListNode = new Node(head.val);
+            // This keeps our reference to the head of our copy list so we can access our list.
+            Node returnHead = currentCopyListNode;
+            // This keeps our references to each object.
+            Dictionary<Node, Node> nodeDict = new Dictionary<Node, Node>();
+
+            // Loop through the main list to create a copy of val and next to our new list.
+            while (currentNode != null)
+            {
+                // We need to check if the next one is null.
+                // Creating this next copy allows us to traverse with our copy list
+                if (currentNode.next != null)
+                {
+                    copyNode = new Node(currentNode.next.val);
+                }
+                else
+                {
+                    copyNode = null;
+                }
+
+                // We can now assign currentCopyListNode.next to our newly created noce.
+                // This is now a complete node, aside from the random property
+                currentCopyListNode.next = copyNode;
+
+                // Now we make a reference to these nodes.
+                // Dictionary allows us a reference to the objects.
+                nodeDict.Add(currentNode, currentCopyListNode);
+                
+                // Then we traverse to the next node and continue copying
+                currentNode = currentNode.next;
+                currentCopyListNode = currentCopyListNode.next;
+            }
+            // At this point we have 2 identical lists aside from the random node. 
+            // we reset both to the head so we can traverse both lists again. 
+            currentNode = head;
+            currentCopyListNode = returnHead;
+
+            // this while loop traverses both lists and adds the randomNode to our copied list.
+            while (currentNode != null)
+            {
+                // Check if random is null, otherwise an error will occur trying to access the dictionary.
+                if (currentNode.random != null)
+                {
+                    // We look up the main list's node in the dictionary and assign it to our currentCopyListNode's random property.
+                    currentCopyListNode.random = nodeDict[currentNode.random];
+                }
+                else
+                {
+                    currentCopyListNode.random = null;
+                }
+                currentNode = currentNode.next;
+                currentCopyListNode = currentCopyListNode.next;
+            }
+
+            // return the head of our new list.
+            return returnHead;
+        }
+
 
         public string LongestPalindrome(string s)
         {
