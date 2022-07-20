@@ -19,7 +19,170 @@ namespace LeetCode
     internal class InterviewPrepQuestions
     {
 
-        public bool IsValid(string s)
+        public string LongestPalindrome(string s)
+        {
+            int preIndex = 0;
+            int currentIndex = 1;
+            int postIndex = 2;
+            int biggestCount = 0;
+            int[] bestValues = new int[] { };
+            StringBuilder returnString = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                preIndex = i - 1;
+                postIndex = i + 1;
+                if (postIndex < s.Length && s[postIndex] == s[i])
+                {
+                    preIndex = i;
+                    postIndex = i + 1;
+                    while(preIndex >= 0 && postIndex < s.Length)
+                    {
+                        if (s[preIndex] == s[postIndex])
+                        {
+                            preIndex--;
+                            postIndex++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    preIndex++;
+                    postIndex--;
+                    if (postIndex - preIndex > biggestCount)
+                    {
+                        biggestCount = postIndex - preIndex;
+                        bestValues = new int[] { preIndex, postIndex };
+                    }
+                }
+                preIndex = i - 1;
+                postIndex = i + 1;
+                if (preIndex >= 0 && postIndex < s.Length && (s[preIndex] == s[postIndex]))
+                {
+                    while (preIndex >= 0 && postIndex < s.Length)
+                    {
+                        if (s[preIndex] == s[postIndex])
+                        {
+                            preIndex--;
+                            postIndex++;
+                        }
+                        else break;
+                    }
+                    preIndex++;
+                    postIndex--;
+                    if (postIndex - preIndex > biggestCount)
+                    {
+                        biggestCount = postIndex - preIndex;
+                        bestValues = new int[] { preIndex, postIndex };
+                    }
+                }
+            }
+            if (biggestCount == 0) return s[0].ToString();
+            for (int i = bestValues[0]; i <= bestValues[1]; i++)
+            {
+                returnString.Append(s[i]);
+            }
+            return returnString.ToString();
+        }
+
+            /*public string LongestPalindrome(string s)
+            {
+                int preIndex = 0;
+                int currentIndex = 1;
+                int postIndex = 2;
+                StringBuilder check = new StringBuilder();
+                string longP = "";
+                string returnString = "";
+                if (s.Length == 1) return s;
+                if (s.Length < 3)
+                {
+                    if (s[0] == s[1])
+                    {
+                        return s;
+                    }
+                    else
+                    {
+                        return s[0].ToString();
+                    }
+                }
+                if (s.Length < 4)
+                {
+                    if (s[0] == s[2])
+                    {
+                        return s;
+                    }
+                    if (s[0] == s[1])
+                    {
+                        return s.Substring(0, 2);
+                    }
+                    if (s[1] == s[2])
+                    {
+                        return s.Substring(1, 2);
+                    }
+
+                    else return s[0].ToString();
+                }
+
+
+                while (currentIndex < s.Length)
+                {
+                    preIndex = currentIndex - 1;
+                    postIndex = currentIndex + 1;
+                    if (currentIndex + 1 < s.Length - 1 && s[currentIndex] == s[postIndex])
+                    {
+                        preIndex = currentIndex;
+                        postIndex = currentIndex + 1;
+                        while(preIndex >= 0 && postIndex < s.Length)
+                        {
+                            if (s[preIndex] == s[postIndex])
+                            {
+                                preIndex--;
+                                postIndex++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        preIndex++;
+                        for (int i = preIndex; i < postIndex; i++)
+                        {
+                            check.Append(s[i]);
+                        }
+                        if (check.Length > returnString.Length) returnString = check.ToString();
+                        check.Clear();
+                    }
+                    preIndex = currentIndex - 1;
+                    postIndex = currentIndex + 1; 
+                    if (postIndex < s.Length && s[preIndex] == s[postIndex])
+                    {
+                        while (preIndex >= 0 && postIndex < s.Length)
+                        {
+                            if (s[preIndex] == s[postIndex])
+                            {
+                                preIndex--;
+                                postIndex++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        preIndex++;
+                        for (int i = preIndex; i < postIndex; i++)
+                        {
+                            check.Append(s[i]);
+                        }
+                        if (check.Length > returnString.Length) returnString = check.ToString();
+                        check.Clear();
+                    }
+                    currentIndex++;
+                }
+                if (returnString == "") return s[0].ToString();
+                return returnString;
+            }*/
+
+            public bool IsValid(string s)
         {
             Stack<char> q = new Stack<char>();
             char tmp;

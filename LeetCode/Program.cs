@@ -129,7 +129,7 @@ char[][] grid = new char[][]
   new char[] {'0', '1', '0'},
   new char[] {'1', '1', '1'}
 };
+string temp = "ac";
+Console.WriteLine(inter.LongestPalindrome(temp));
 
-
-Console.WriteLine(inter.IsValid("()([)()()]"));
 
