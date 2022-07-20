@@ -131,5 +131,5 @@ char[][] grid = new char[][]
 };
 
 
-Console.WriteLine(inter.NumberOfIslands(grid));
+Console.WriteLine(inter.IsValid("()([)()()]"));
 

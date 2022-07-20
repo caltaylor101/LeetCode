@@ -19,6 +19,43 @@ namespace LeetCode
     internal class InterviewPrepQuestions
     {
 
+        public bool IsValid(string s)
+        {
+            Stack<char> q = new Stack<char>();
+            char tmp;
+            
+            foreach (char i in s)
+            {
+                switch (i)
+                {
+                    case '{':
+                        q.Push(i);
+                        break;
+
+                    case '(':
+                        q.Push(i);
+                        break;
+                    case '[':
+                        q.Push(i);
+                        break;
+                    case '}':
+                        if (q.Count == 0) return false;
+                        if (q.Pop() != '{') return false;
+                        break;
+                    case ')':
+                        if (q.Count == 0) return false;
+                        if (q.Pop() != '(') return false;
+                        break;
+                    case ']':
+                        if (q.Count == 0) return false;
+                        if (q.Pop() != '[') return false;
+                        break;
+                }
+            }
+            if (q.Count != 0) return false;
+            return true;
+        }
+
         private int islandCount = 0;
 
         public int NumIslands(char[][] grid)
