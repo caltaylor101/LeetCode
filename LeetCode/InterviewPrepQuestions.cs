@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LeetCode
@@ -49,10 +50,98 @@ namespace LeetCode
     internal class InterviewPrepQuestions
     {
 
-        /*public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        public int MyAtoi(string s)
         {
+            bool isPositive = true;
+            bool operatorTriggered = false;
+            bool digitsTriggered = false;
+            char[] stringArray = s.ToCharArray();
+            StringBuilder digits = new StringBuilder();
+            int returnInt;
 
-        }*/
+            foreach(char c in stringArray)
+            {
+                if (char.IsWhiteSpace(c) && (digitsTriggered || operatorTriggered)) break;
+                if (!char.IsWhiteSpace(c))
+                {
+                    switch (c)
+                    {
+                        case '-':
+                            if (digitsTriggered) break;
+                            if (!operatorTriggered)
+                            {
+                                isPositive = false;
+                                operatorTriggered = true;
+                                continue;
+                            }
+                            else break;
+                        case '+':
+                            if (digitsTriggered) break;
+                            if (!operatorTriggered)
+                            {
+                                isPositive = true;
+                                operatorTriggered = true;
+                                continue;
+                            }
+                            else break;
+                        case var digit when new Regex(@"^[0-9]+$").IsMatch(digit.ToString()):
+                            digits.Append(digit);
+                            digitsTriggered = true;
+                            continue;
+                        default:
+                            break;
+                    }
+                    break;
+                }
+            };
+            if (String.IsNullOrEmpty(digits.ToString()))
+            {
+                return 0;
+            }
+            try
+            {
+                returnInt = Convert.ToInt32(digits.ToString());
+            }
+            catch
+            {
+                if (isPositive)
+                {
+                    returnInt = int.MaxValue;
+                }
+                else
+                {
+                    returnInt = int.MinValue;
+                }
+            }
+
+            return (isPositive) ? returnInt: -returnInt;
+        }
+
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            int[] nums3 = new int[nums1.Length + nums2.Length];
+            nums1.CopyTo(nums3, 0);
+            nums2.CopyTo(nums3, nums1.Length);
+            Array.Sort(nums3);
+            
+
+            if (nums3.Length % 2 == 0)
+            {
+                int median1 = nums3.Length;
+                int median21 = median1 / 2;
+                int median22 = median1/2 -1;
+
+                double median2 = Convert.ToDouble(nums3[median21]);
+                double median3 = Convert.ToDouble(nums3[median22]);
+                return ((median2 + median3) / 2);
+            }
+            else
+            {
+                return nums3[nums3.Length / 2];
+            }
+
+            return 0f;
+        }
 
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
