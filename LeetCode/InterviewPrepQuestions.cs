@@ -48,6 +48,50 @@ namespace LeetCode
 
     internal class InterviewPrepQuestions
     {
+
+        /*public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+
+        }*/
+
+        public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        {
+            ListNode head = new ListNode();
+            ListNode current = head;
+            if (list1 == null) return list2;
+            if (list2 == null) return list1;
+
+            while (list1 != null || list2 != null)
+            {
+                if (list1?.val <= list2?.val || list2 == null)
+                {
+                    current.next = list1;
+                    current = current.next;
+                    list1 = list1.next;
+                }
+                else
+                {
+                    current.next = list2;
+                    current = current.next;
+                    list2 = list2.next;
+                }
+            }
+            return head.next;
+        }
+        public int MaxProfit(int[] prices)
+        {
+            int low = prices[0];
+            int sum = 0;
+            int max = 0;
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (prices[i] < low) low = prices[i];
+                max = Math.Max(max, prices[i] - low);
+            }
+
+            return max;
+        }
         public Node CopyRandomList(Node head)
         {
             // take care of the null case

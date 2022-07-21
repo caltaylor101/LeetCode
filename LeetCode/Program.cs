@@ -133,45 +133,18 @@ char[][] grid = new char[][]
 string temp = "ac";
 */
 
-Node node1 = new Node(1, null);
-Node node2 = new Node(10, node1);
-Node node3 = new Node(11, node2);
-Node node4 = new Node(13, node3);
-Node node5 = new Node(7, node4);
+/*ListNode node1 = new ListNode(4);
+ListNode node2 = new ListNode(2, node1);
+ListNode node3 = new ListNode(1, node2);
 
-node1.random = node5;
-node2.random = node3;
-node3.random = node1;
-node4.random = node5;
-node5.random = null;
-node5.next = node4;
+ListNode node4 = new ListNode(4);
+ListNode node5 = new ListNode(3, node4);
+ListNode node6 = new ListNode(1, node5);*/
 
+ListNode node3 = new ListNode(2);
+ListNode node6 = new ListNode(1);
 
-Node copyListHead = inter.CopyRandomList(node5);
-
-
-Console.WriteLine("copylisthead current val " + copyListHead.next.next.val);
-Console.WriteLine("copylisthead next " + copyListHead.next.next.next.val);
-if (copyListHead.next.next.random == null)
-{
-    Console.WriteLine("random is null ");
-}
-else
-{
-    Console.WriteLine("copylisthead random val " + copyListHead.next.next.random.val);
-}
-
-Console.WriteLine();
-Console.WriteLine("node5 current val " + node5.next.next.val);
-Console.WriteLine("node5 next val" + node5.next.next.next.val);
-if (node5.next.next.random == null)
-{
-    Console.WriteLine("random node 5 is null");
-}
-else
-{
-    Console.WriteLine("node5 random val " + node5.next.next.random.val);
-}
+ListNode result = inter.MergeTwoLists(node3, node6);
 
 
 
