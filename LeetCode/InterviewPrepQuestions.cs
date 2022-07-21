@@ -52,22 +52,28 @@ namespace LeetCode
 
         public int MyAtoi(string s)
         {
+            if (String.IsNullOrEmpty(s)) return 0;
+
+
             bool isPositive = true;
             bool operatorTriggered = false;
             bool digitsTriggered = false;
-            char[] stringArray = s.ToCharArray();
             StringBuilder digits = new StringBuilder();
             int returnInt;
 
-            foreach(char c in stringArray)
+
+            foreach(char c in s)
             {
-                if (char.IsWhiteSpace(c) && (digitsTriggered || operatorTriggered)) break;
-                if (!char.IsWhiteSpace(c))
-                {
+                // if a whitespace happens after the triggers, then break the loop
+                if ((digitsTriggered || operatorTriggered) && char.IsWhiteSpace(c)) break;
+                // if there is a leading whitespace, reset the loop
+                if (char.IsWhiteSpace(c)) continue;
+
                     switch (c)
                     {
                         case '-':
                             if (digitsTriggered) break;
+                            // check if operator has been set, if not, set the operator and reset loop
                             if (!operatorTriggered)
                             {
                                 isPositive = false;
@@ -77,6 +83,7 @@ namespace LeetCode
                             else break;
                         case '+':
                             if (digitsTriggered) break;
+                            // check if operator has been set, if not, set the operator and reset loop
                             if (!operatorTriggered)
                             {
                                 isPositive = true;
@@ -84,6 +91,7 @@ namespace LeetCode
                                 continue;
                             }
                             else break;
+                            //Regex expression to find any digit and add it to a string.
                         case var digit when new Regex(@"^[0-9]+$").IsMatch(digit.ToString()):
                             digits.Append(digit);
                             digitsTriggered = true;
@@ -92,12 +100,13 @@ namespace LeetCode
                             break;
                     }
                     break;
-                }
             };
-            if (String.IsNullOrEmpty(digits.ToString()))
-            {
-                return 0;
-            }
+
+            //Make sure our digits string isn't null or empty.
+            if (String.IsNullOrEmpty(digits.ToString())) return 0;
+
+            //Try catch blocks to see if it is outside the integer range.
+            //If it fails to convert to an int at this stage, then we know it is outside of the range.
             try
             {
                 returnInt = Convert.ToInt32(digits.ToString());
@@ -114,6 +123,7 @@ namespace LeetCode
                 }
             }
 
+            //Ternary operator to make the integer + or - on return
             return (isPositive) ? returnInt: -returnInt;
         }
 

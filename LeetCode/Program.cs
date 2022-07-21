@@ -48,5 +48,5 @@ InterviewPrepQuestions inter = new InterviewPrepQuestions();
 int[] nums1 = new int[] { 1, 2 };
 int[] nums2 = new int[] { 3,4 };
 
-Console.WriteLine(inter.MyAtoi("4320-38238"));
+Console.WriteLine(inter.MyAtoi("     432  0-38238"));
 
