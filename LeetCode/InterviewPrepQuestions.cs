@@ -31,24 +31,251 @@ namespace LeetCode
             this.random = random;
         }
     }
-/*
-    public class MyNode
-    {
-        public int val;
-        public MyNode next;
-        public Node random;
-
-        public MyNode(int _val, MyNode next = null, MyNode random = null)
+    /*
+        public class MyNode
         {
-            val = _val;
-            next = null;
-            random = null;
-        }
-    }*/
+            public int val;
+            public MyNode next;
+            public Node random;
 
+            public MyNode(int _val, MyNode next = null, MyNode random = null)
+            {
+                val = _val;
+                next = null;
+                random = null;
+            }
+        }*/
 
+/*  public class TreeNode {
+      public int val;
+      public TreeNode left;
+      public TreeNode right;
+      public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }*/
     internal class InterviewPrepQuestions
     {
+        public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
+        {
+            //Initialize both lists
+            IList<IList<int>> returnList = new List<IList<int>>();
+            IList<int> intList = new List<int>();
+            // check for null root
+            if (root == null) return returnList;
+            // use two stacks to traverse the tree
+            Stack<TreeNode> stack1 = new Stack<TreeNode>();
+            Stack<TreeNode> stack2 = new Stack<TreeNode>();
+            //Initialize the stack with the root
+            stack1.Push(root);
+            //currentNode will take each node from the stack
+            TreeNode currentNode;
+
+            //We won't be done till both stacks are empty. 
+            while (stack1.Count > 0 || stack2.Count > 0)
+            {
+                //TryPop returns a boolean. So if nothing is in the stack, it will return false.
+                //If there is something in the stack, it assigns it to currentNode.
+                while(stack1.TryPop(out currentNode))
+                {
+                    //Add the currentNode to the list, as it will be deleted when the loop resets.
+                    intList.Add(currentNode.val);
+                    //Moves left to right through the tree
+                    if (currentNode.left != null) stack2.Push(currentNode.left);
+                    if (currentNode.right != null) stack2.Push(currentNode.right);
+                }
+
+                //If there is something in the intList, add it to our return list.
+                //If the left and right node are null, then we will add a blank list here.
+                if (intList.Count != 0) returnList.Add(intList);
+                //Get a fresh list.
+                intList = new List<int>();
+
+                while (stack2.TryPop(out currentNode))
+                {
+                    intList.Add(currentNode.val);
+                    //Move right to left now, as we are going the opposite direction down the tree because we are on the next level.
+                    if (currentNode.right != null) stack1.Push(currentNode.right);
+                    if (currentNode.left != null) stack1.Push(currentNode.left);
+                }
+                if (intList.Count != 0) returnList.Add(intList);
+                intList = new List<int>();
+            }
+            return returnList;
+        }
+        public IList<IList<int>> ZigzagLevelOrder3(TreeNode root)
+        {
+            IList<IList<int>> returnList = new List<IList<int>>();
+            IList<int> intList = new List<int>();
+            if (root == null) return returnList;
+            bool q1Traverse = true;
+            bool q2Traverse = false;
+            Stack<TreeNode> q1 = new Stack<TreeNode>();
+            Stack<TreeNode> q2 = new Stack<TreeNode>();
+            q1.Push(root);
+            intList = new List<int>();
+            TreeNode currentNode;
+            while (q1.Count > 0 || q2.Count > 0)
+            {
+                if (q1Traverse && q1.TryPop(out currentNode))
+                {
+                    intList.Add(currentNode.val);
+                    if (currentNode.left != null)
+                    {
+                        q2.Push(currentNode.left);
+                    }
+                    if (currentNode.right != null)
+                    {
+                        q2.Push(currentNode.right);
+                    }
+                }
+                if (q2Traverse && q2.TryPop(out currentNode))
+                {
+                    intList.Add(currentNode.val);
+                    if (currentNode.right != null)
+                    {
+                        q1.Push(currentNode.right);
+                    }
+                    if (currentNode.left != null)
+                    {
+                        q1.Push(currentNode.left);
+                    }
+                }
+                if (q1.Count == 0 && q1Traverse)
+                {
+                    if (intList != null && intList.Count > 0) returnList.Add(intList);
+
+                    intList = new List<int>();
+                    q1Traverse = false;
+                    q2Traverse = true;
+                }
+                if (q2.Count == 0 && q2Traverse)
+                {
+                    if (intList != null && intList.Count > 0) returnList.Add(intList);
+                    intList = new List<int>();
+                    q1Traverse = true;
+                    q2Traverse = false;
+                }
+            }
+            return returnList;
+        }
+        public IList<IList<int>> ZigzagLevelOrder2(TreeNode root)
+        {
+            IList<IList<int>> zigList = new List<IList<int>>();
+            IList<int> zagIntList = new List<int>();
+            if (root == null) return zigList;
+            bool q1Traverse =true;
+            bool q2Traverse = false;
+            Queue<TreeNode> q1 = new Queue<TreeNode>();
+            Stack<TreeNode> q2 = new Stack<TreeNode>();
+            q1.Enqueue(root);
+            zagIntList.Add(root.val);
+            zigList.Add(zagIntList);
+            zagIntList = new List<int>();
+            TreeNode currentNode;
+
+
+
+            while (q1.Count > 0 || q2.Count > 0)
+            {
+                if (q1Traverse && q1.TryDequeue(out currentNode))
+                {
+                    if (currentNode.right != null)
+                    {
+                        q2.Push(currentNode.right);
+                        zagIntList.Add(currentNode.right.val);
+                    }
+                    if (currentNode.left != null)
+                    {
+                        q2.Push(currentNode.left);
+                        zagIntList.Add(currentNode.left.val);
+                    }
+                }
+                if (q2Traverse && q2.TryPop(out currentNode))
+                {
+                    if (currentNode.left != null)
+                    {
+                        q1.Enqueue(currentNode.left);
+                        zagIntList.Add(currentNode.left.val);
+                    }
+                    if (currentNode.right != null)
+                    {
+                        q1.Enqueue(currentNode.right);
+                        zagIntList.Add(currentNode.right.val);
+                    }
+                }
+                if (q1.Count == 0 && q1Traverse)
+                {
+                    if(zagIntList != null && zagIntList.Count > 0) zigList.Add(zagIntList);
+
+                    zagIntList = new List<int>();
+                    q1Traverse = false;
+                    q2Traverse = true;
+                }
+                if (q2.Count == 0 && q2Traverse)
+                {
+                    if (zagIntList != null && zagIntList.Count > 0) zigList.Add(zagIntList);
+                    zagIntList = new List<int>();
+                    q1Traverse = true;
+                    q2Traverse = false;
+                }
+            }
+            return zigList;
+        }
+
+
+        private IList<int> list = new List<int>();
+        public IList<int> InorderTraversal(TreeNode root)
+        {
+
+            if (root.left != null)
+            {
+                InorderTraversal(root.left); 
+            }
+
+            list.Add(root.val);
+
+            if (root.right != null)
+            {
+                InorderTraversal(root.right);
+            }
+
+            return list;
+        }
+        public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            // HashSet that will track all unique nodes
+            HashSet<ListNode> set = new HashSet<ListNode>();
+
+            while(headA != null || headB != null)
+            {
+                if (headA != null)
+                {
+                    // tries to add the node to the set, if it exists then we know this is our intersection.
+                    if(!set.Add(headA))
+                    {
+                        return headA;
+                    }
+                    //traverse through the first list
+                    headA = headA.next;
+
+                }
+                if (headB != null)
+                {
+                    if(!set.Add(headB))
+                    {
+                        return headB;
+                    }
+                    //traverse through the second list
+                    headB = headB.next;
+                }
+            }
+
+            //return null if both lists don't have an intersection.
+            return null;
+        }
 
         public ListNode OddEvenList(ListNode head)
         {

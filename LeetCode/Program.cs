@@ -13,10 +13,34 @@ ListNode node3 = new ListNode(3, node2);
 ListNode node4 = new ListNode(2, node3);
 ListNode node5 = new ListNode(1, node4);
 
-ListNode test = inter.OddEvenList(node5);
 
-while (test != null)
+ListNode node6 = new ListNode(6, node3);
+ListNode node7 = new ListNode(7, node6);
+ListNode node8 = new ListNode(8, node7);
+ListNode node9 = new ListNode(9, node8);
+
+
+TreeNode tree5 = new TreeNode(7);
+TreeNode tree4 = new TreeNode(15);
+TreeNode tree3 = new TreeNode(20, tree4, tree5);
+TreeNode tree2 = new TreeNode(9, tree3, null);
+TreeNode tree1 = new TreeNode(3, tree2, tree3);
+
+/*TreeNode tree10 = new TreeNode(8);
+TreeNode tree9 = new TreeNode(-1, null, tree10);
+TreeNode tree8 = new TreeNode(6);
+TreeNode tree7 = new TreeNode(1);
+TreeNode tree6 = new TreeNode(5);
+TreeNode tree5 = new TreeNode(3, null, tree8);
+TreeNode tree4 = new TreeNode(1, tree6, tree7);
+TreeNode tree3 = new TreeNode(4, tree5, tree9);
+TreeNode tree2 = new TreeNode(2, tree4, null);
+TreeNode tree1 = new TreeNode(0, tree2, tree3);*/
+
+
+var test = inter.ZigzagLevelOrder(tree1);
+
+foreach (var i in test)
 {
-    Console.WriteLine(test.val);
-    test = test.next;
+    foreach (var k in i) Console.WriteLine(k);
 }
