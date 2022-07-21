@@ -50,6 +50,41 @@ namespace LeetCode
     internal class InterviewPrepQuestions
     {
 
+        public ListNode OddEvenList(ListNode head)
+        {
+            if (head == null) return null;
+            //Instantiates our first even node.
+            ListNode evenCurrent = head.next;
+            //A way to reference our even list
+            ListNode evenHead = evenCurrent;
+            //Instantiates our first odd node
+            ListNode oddCurrent = head;
+            //At the end of the traversal we can attach the even head to oddTail.next
+            ListNode oddTail;
+
+            //I did a while true here, which could also be moved as:
+            // while (oddCurrent.next != null || evenCurrent.next !=null)
+            // Then remove the if statement, and have oddTail = oddCurrent after the while loop.
+            while(true)
+            {
+                if (oddCurrent.next == null || evenCurrent.next == null)
+                {
+                    //When either of those are null, the list has stopped traversing.
+                    // We assign the oddTail to the last odd node in the list.
+                    oddTail = oddCurrent;
+                    break;
+                }
+                oddCurrent.next = evenCurrent.next;
+                evenCurrent.next = oddCurrent.next.next;
+                oddCurrent = oddCurrent.next;
+                evenCurrent = evenCurrent.next;
+            }
+            //point the oddTail to the evenHead.
+            oddTail.next = evenHead;
+            //return the original head.
+            return head;
+        }
+
         public int MyAtoi(string s)
         {
             if (String.IsNullOrEmpty(s)) return 0;

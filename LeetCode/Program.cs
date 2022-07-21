@@ -3,50 +3,20 @@ using LeetCode;
 using System.Text;
 
 Day9 day = new Day9();
-/*
-TreeNode node1 = new TreeNode(25);
-TreeNode node2 = new TreeNode(56);
-TreeNode node3 = new TreeNode(19, null, node1);
-
-TreeNode node4 = new TreeNode(47, null, node2);
-TreeNode node5 = new TreeNode(26, node3);
-TreeNode node6 = new TreeNode(32, node5, node4);*/
-
-//day.LevelOrder(node5);
-
-
-/*int[][] image = new int[][] {
-    new int[] { 1, 1, 1 },
-    new int[] { 1, 1, 0 },
-    new int[] { 1, 0, 1 }
-};*/
-/*int[][] image = new int[][] {
-    new int[] { 0,0,0 },
-    new int[] { 0,1,0 }
-};
-*/
-/*int[][] image = new int[][]
-{
-    new int[] {0,0,0},
-    new int[] {0,0,0}
-};*/
-
-/*char[][] islandLands = new char[][]
-{
-    new char[] {'1','1','1', '0','0'},
-    new char[] {'0','0','0', '1','1'},
-    new char[] {'0','0','0', '0','0'},
-    new char[] {'0','1','0', '0','0'}
-};
-
-Console.WriteLine(day.NumIslands(islandLands));*/
 
 
 InterviewPrepQuestions inter = new InterviewPrepQuestions();
 
+ListNode node1 = new ListNode(5);
+ListNode node2 = new ListNode(4, node1);
+ListNode node3 = new ListNode(3, node2);
+ListNode node4 = new ListNode(2, node3);
+ListNode node5 = new ListNode(1, node4);
 
-int[] nums1 = new int[] { 1, 2 };
-int[] nums2 = new int[] { 3,4 };
+ListNode test = inter.OddEvenList(node5);
 
-Console.WriteLine(inter.MyAtoi("     432  0-38238"));
-
+while (test != null)
+{
+    Console.WriteLine(test.val);
+    test = test.next;
+}
