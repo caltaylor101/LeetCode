@@ -70,6 +70,95 @@ namespace LeetCode
       }*/
     internal class InterviewPrepQuestions
     {
+        public int MaxArea(int[] height)
+        {
+            int sumVolume = 0;
+            int maxVolume = 0;
+            int startIndex = 0;
+            int endIndex = height.Length - 1;
+            int prevMaxStartValue = height[startIndex];
+            int prevMaxEndValue = height[endIndex];
+
+            maxVolume = Math.Max(maxVolume, ((endIndex - startIndex) * Math.Min(height[startIndex], height[endIndex])));
+
+            while (startIndex <= endIndex)
+            {
+                if (prevMaxStartValue < height[startIndex])
+                {
+                    sumVolume = (endIndex - startIndex) * Math.Min(height[startIndex], height[endIndex]);
+                    prevMaxStartValue = height[startIndex];
+                }
+                if (prevMaxEndValue < height[endIndex])
+                {
+                    sumVolume = (endIndex - startIndex) * Math.Min(height[startIndex], height[endIndex]);
+                    prevMaxEndValue = height[endIndex];
+                }
+                if (height[startIndex] <= height[endIndex]) startIndex++;
+                else endIndex--;
+                if (sumVolume > maxVolume) maxVolume = sumVolume;
+            }
+
+            return maxVolume;
+        }
+
+        public int MaxArea3(int[] height)
+        {
+            int sumVolume = 0;
+            int maxVolume = 0;
+            int startIndex = 0;
+            int endIndex = height.Length - 1;
+            int prevMaxStartValue = height[startIndex];
+            int prevMaxEndValue = height[endIndex];
+
+            maxVolume = Math.Max(maxVolume, ((endIndex - startIndex) * Math.Min(height[startIndex], height[endIndex])));
+
+            while (startIndex <= endIndex)
+            {
+                if (prevMaxStartValue < height[startIndex])
+                {
+                    if (height[startIndex] <= height[endIndex]) sumVolume = (endIndex - startIndex) * height[startIndex];
+                    else sumVolume = (endIndex - startIndex) * height[endIndex];
+
+                    prevMaxStartValue = height[startIndex];
+                }
+                if (prevMaxEndValue < height[endIndex])
+                {
+                    if (height[startIndex] <= height[endIndex]) sumVolume = (endIndex - startIndex) * height[startIndex];
+                    else sumVolume = (endIndex - startIndex) * height[endIndex];
+                }
+                if (height[startIndex] <= height[endIndex]) startIndex++;
+                else endIndex--;
+                if (sumVolume > maxVolume) maxVolume = sumVolume;
+            }
+
+            return maxVolume;
+        }
+        public int MaxArea2(int[] height)
+        {
+            //Variable to return that records our maxVolume
+            int maxVolume = 0;
+            int startIndex = 0;
+            int endIndex = height.Length - 1;
+
+            //Sandwich the answer in. 
+            while (startIndex <= endIndex)
+            {
+                //We put the calculation we came up with to compare it against the maxVolume.
+                //If the next iteration is greater than the maxVolume, we record the new value. 
+                //From the start example, ((8 - 1) * Math.Min(8, 7)).
+                maxVolume = Math.Max(maxVolume, ((endIndex - startIndex) * Math.Min(height[startIndex], height[endIndex])));
+                //Whichever value is smaller, we traverse that index. 
+                //If the start value is smaller, we find a bigger one by moving it up.
+                //If the endIndex is smaller than the startIndex, then we move it down to find a larger value.
+                //This way, we are alwasys finding the furthest maximum values from each other. 
+                if (height[startIndex] <= height[endIndex]) startIndex++;
+                else endIndex--;
+            }
+            //Return what we found.
+            return maxVolume;
+        }
+
+
         public Node Connect(Node root)
         {
             //check for initial null cases
@@ -573,7 +662,7 @@ namespace LeetCode
             currentCopyListNode = returnHead;
 
             // this while loop traverses both lists and adds the randomNode to our copied list.
-            while (currentNode != null)
+            /*while (currentNode != null)
             {
                 // Check if random is null, otherwise an error will occur trying to access the dictionary.
                 if (currentNode.random != null)
@@ -587,7 +676,7 @@ namespace LeetCode
                 }
                 currentNode = currentNode.next;
                 currentCopyListNode = currentCopyListNode.next;
-            }
+            }*/
 
             // return the head of our new list.
             return returnHead;

@@ -35,6 +35,6 @@ TreeNode node2 = new TreeNode(2, node4, node5);
 TreeNode node1 = new TreeNode(1, node2, node3);
 
 
-inter.BuildTree(new int[] { 1, 2, 4, 5, 3, 6, 7 }, new int[] { 4, 2, 5, 1, 6, 3, 7 });
+Console.WriteLine( inter.MaxArea(new int[] { 1, 1 }));
 
 
