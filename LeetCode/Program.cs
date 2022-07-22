@@ -7,24 +7,13 @@ Day9 day = new Day9();
 
 InterviewPrepQuestions inter = new InterviewPrepQuestions();
 
-ListNode node1 = new ListNode(5);
-ListNode node2 = new ListNode(4, node1);
-ListNode node3 = new ListNode(3, node2);
-ListNode node4 = new ListNode(2, node3);
-ListNode node5 = new ListNode(1, node4);
 
-
-ListNode node6 = new ListNode(6, node3);
-ListNode node7 = new ListNode(7, node6);
-ListNode node8 = new ListNode(8, node7);
-ListNode node9 = new ListNode(9, node8);
-
-
+/*
 TreeNode tree5 = new TreeNode(7);
 TreeNode tree4 = new TreeNode(15);
 TreeNode tree3 = new TreeNode(20, tree4, tree5);
 TreeNode tree2 = new TreeNode(9, tree3, null);
-TreeNode tree1 = new TreeNode(3, tree2, tree3);
+TreeNode tree1 = new TreeNode(3, tree2, tree3);*/
 
 /*TreeNode tree10 = new TreeNode(8);
 TreeNode tree9 = new TreeNode(-1, null, tree10);
@@ -37,10 +26,15 @@ TreeNode tree3 = new TreeNode(4, tree5, tree9);
 TreeNode tree2 = new TreeNode(2, tree4, null);
 TreeNode tree1 = new TreeNode(0, tree2, tree3);*/
 
+TreeNode node7 = new TreeNode(7);
+TreeNode node6 = new TreeNode(6);
+TreeNode node5 = new TreeNode(5);
+TreeNode node4 = new TreeNode(4);
+TreeNode node3 = new TreeNode(3, node6, node7);
+TreeNode node2 = new TreeNode(2, node4, node5);
+TreeNode node1 = new TreeNode(1, node2, node3);
 
-var test = inter.ZigzagLevelOrder(tree1);
 
-foreach (var i in test)
-{
-    foreach (var k in i) Console.WriteLine(k);
-}
+inter.BuildTree(new int[] { 1, 2, 4, 5, 3, 6, 7 }, new int[] { 4, 2, 5, 1, 6, 3, 7 });
+
+

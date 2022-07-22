@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace LeetCode
 {
+
+
     public class ListNode
     {
         public int val;
@@ -18,17 +20,27 @@ namespace LeetCode
         }
     }
 
+    // Definition for a Node.
     public class Node
     {
         public int val;
+        public Node left;
+        public Node right;
         public Node next;
-        public Node random;
 
-        public Node(int _val = 0, Node next = null, Node random = null)
+        public Node() { }
+
+        public Node(int _val)
         {
-            this.val = _val;
-            this.next = next;
-            this.random = random;
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next)
+        {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
         }
     }
     /*
@@ -46,18 +58,78 @@ namespace LeetCode
             }
         }*/
 
-/*  public class TreeNode {
-      public int val;
-      public TreeNode left;
-      public TreeNode right;
-      public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
-  }*/
+    /*  public class TreeNode {
+          public int val;
+          public TreeNode left;
+          public TreeNode right;
+          public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+              this.val = val;
+              this.left = left;
+              this.right = right;
+          }
+      }*/
     internal class InterviewPrepQuestions
     {
+        public Node Connect(Node root)
+        {
+            //check for initial null cases
+            if (root == null) return null;
+            if (root.left == null) return root;
+
+            //check if the left node exists so we can traverse down the tree.
+            if (root.left != null)
+            {
+                //every left node should point to the right node.
+                root.left.next = root.right;
+                //Make sure root.next isn't null.
+                //We can access the left node from here to fulfill the space complexity requirement.
+                //If root.next is null, then we are at the edge of our tree and the right node will be null.
+                if (root.next != null) root.right.next = root.next.left;
+                
+            }
+            //Return null when the tree has been traversed. 
+            else return null;
+
+            //Recurse the logic on both branches.
+            Connect(root.left);
+            Connect(root.right);
+            return root;
+        }
+
+        public TreeNode BuildTree(int[] preorder, int[] inorder)
+        {
+            var n = preorder.Length;
+            if (n == 0) return null;
+
+            return DFS(preorder, 0, n - 1, inorder, 0, n - 1);
+        }
+
+        private TreeNode DFS(int[] preorder, int preLeft, int preRight, int[] inorder, int inLeft, int inRight)
+        {
+            if (preLeft > preRight) return null;
+
+            var rootValue = preorder[preLeft];
+            var rootInIndex = -1;
+
+            for (int i = inLeft; i <= inRight; i++)
+            {
+                if (inorder[i] == rootValue)
+                {
+                    rootInIndex = i;
+                    break;
+                }
+            }
+
+            var count = rootInIndex - inLeft;
+
+            var root = new TreeNode(rootValue);
+
+            root.left = DFS(preorder, preLeft + 1, preLeft + count, inorder, inLeft, rootInIndex - 1);
+            root.right = DFS(preorder, preLeft + count + 1, preRight, inorder, rootInIndex + 1, inRight);
+
+            return root;
+        }
+
         public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
         {
             //Initialize both lists
