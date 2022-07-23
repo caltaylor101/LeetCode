@@ -11,16 +11,67 @@ namespace LeetCode
         public IList<IList<int>> ThreeSum(int[] nums)
         {
             List<IList<int>> result = new List<IList<int>>();
+            if (nums.Length == 3 && nums[0] + nums[1] + nums[2] == 0)
+            {
+                result.Add(new List<int>() { nums[0], nums[1], nums[2] });
+                return result;
+            }
+
             Array.Sort(nums);
             var endIndex = nums.Length;
 
             for (int i = 0; i < endIndex; i++)
             {
-                // Makes sure it is a unique value.
+                if (i > 0 && nums[i - 1] == nums[i]) continue;
+
+                var left = i + 1;
+                var right = endIndex - 1;
+
+                while (left < right)
+                {
+                    var sum = nums[i] + nums[left] + nums[right];
+                    if (sum == 0)
+                    {
+                        result.Add(new List<int>() { nums[i], nums[left], nums[right] });
+
+                        while (left < right && nums[left] == nums[left + 1]) left++;
+                        while (left < right && nums[right] == nums[right - 1]) right--;
+
+                        left++;
+                        right--;
+                    }
+                    else if (sum < 0)
+                    {
+                        while(nums[i] + nums[left] + nums[right] < 0 && left < right)
+                        {
+                            left++;
+                        }
+                    }
+                    else
+                    {
+                        while (nums[i] + nums[left] + nums[right] > 0 && left < right)
+                        {
+                            right--;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+        public IList<IList<int>> ThreeSum6(int[] nums)
+        {
+            List<IList<int>> result = new List<IList<int>>();
+            Array.Sort(nums);
+            var endIndex = nums.Length;
+
+            for (int i = 0; i < endIndex; i++)
+            {
+                // Makes sure i is a unique value.
                 // i = 0 is always unique, so we continue till we get a new i value. 
                 if (i > 0 && nums[i - 1] == nums[i]) continue;
 
-                //Everything to the left of i has already been added. 
+                //Everything to the left of i has already been solved. 
                 //Therefore, we need to make sure we are only solving for the next i.
                 var left = i + 1;
                 var right = endIndex - 1;
@@ -47,7 +98,7 @@ namespace LeetCode
                     //For example, [-4, -1, 0, 1, 2, 2]
                     //i = -4, left starts at i+1 = -1, and right is at the end, 2.
                     //-4 + -1 + 2 = -3. Since the value is too small, we need to move up on the left index to find the next match.
-                    //In the provided example, this would be 2.
+                    //In the provided example, we would move up till this would be 2.
                     else if (sum < 0)
                     {
                         left++;
