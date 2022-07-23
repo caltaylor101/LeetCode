@@ -8,6 +8,59 @@ namespace LeetCode
 {
     internal class InterviewPrepPart2
     {
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            List<IList<int>> result = new List<IList<int>>();
+            Array.Sort(nums);
+            var endIndex = nums.Length;
+
+            for (int i = 0; i < endIndex; i++)
+            {
+                // Makes sure it is a unique value.
+                // i = 0 is always unique, so we continue till we get a new i value. 
+                if (i > 0 && nums[i - 1] == nums[i]) continue;
+
+                //Everything to the left of i has already been added. 
+                //Therefore, we need to make sure we are only solving for the next i.
+                var left = i + 1;
+                var right = endIndex - 1;
+
+                while (left < right)
+                {
+                    //Check to see if our left and right pointer add up to the sum with our i. 
+                    //For every instance they do, we add it to the list and traverse to unique values. 
+                    var sum = nums[i] + nums[left] + nums[right];
+                    if (sum == 0)
+                    {
+                        result.Add(new List<int>() { nums[i], nums[left], nums[right] });
+                        //Move to the spot right before the next unique value.
+                        //If left = left + 1 we increase left till we find a unique value.
+                        //For example, if we had [1, 1, 1, 1, 2] this while loop would stop at left = 1, left + 1 = 2.
+                        while (left < right && nums[left] == nums[left + 1]) left++;
+                        //We do the same thing on the right side.
+                        while (left < right && nums[right] == nums[right - 1]) right--;
+                        //This extra ++ or -- puts us on the unique value. 
+                        left++;
+                        right--;
+                    }
+                    //If sum is less than 0, that means our values on both pointers are too small.
+                    //For example, [-4, -1, 0, 1, 2, 2]
+                    //i = -4, left starts at i+1 = -1, and right is at the end, 2.
+                    //-4 + -1 + 2 = -3. Since the value is too small, we need to move up on the left index to find the next match.
+                    //In the provided example, this would be 2.
+                    else if (sum < 0)
+                    {
+                        left++;
+                    }
+                    else
+                    {
+                        right--;
+                    }
+                }
+            }
+
+            return result;
+        }
         public IList<IList<int>> ThreeSum5(int[] nums)
         {
             IList<IList<int>> result = new List<IList<int>>();
