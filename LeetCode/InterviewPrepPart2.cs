@@ -16,6 +16,7 @@ namespace LeetCode
                 result.Add(new List<int>() { nums[0], nums[1], nums[2] });
                 return result;
             }
+            else if (nums.Length == 3 && nums[0] + nums[1] + nums[2] != 0) return result;
 
             Array.Sort(nums);
             var endIndex = nums.Length;
@@ -42,14 +43,16 @@ namespace LeetCode
                     }
                     else if (sum < 0)
                     {
-                        while(nums[i] + nums[left] + nums[right] < 0 && left < right)
+                        while (left+1 < endIndex && (left < right || nums[left] == nums[left+1]) && nums[i] + nums[left] + nums[right] < 0 )
                         {
+
                             left++;
                         }
                     }
                     else
                     {
-                        while (nums[i] + nums[left] + nums[right] > 0 && left < right)
+
+                        while (right-1 >= 0 && (left < right || nums[right] == nums[right-1]) && nums[i] + nums[left] + nums[right] > 0 )
                         {
                             right--;
                         }

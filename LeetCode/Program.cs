@@ -36,7 +36,7 @@ TreeNode node1 = new TreeNode(1, node2, node3);
 
 IList<IList<int>> insertList = new List<IList<int>>();
 insertList.Add(new List<int>() {1,2,3 });
-IList<IList<int>> result = inter.ThreeSum(new int[] { -3,-2,-1,0,0,1,2,3,4,5,6});
+IList<IList<int>> result = inter.ThreeSum(new int[] { -1,0,1,2,-1,-4 });
 
 int counter = 0;
 foreach (var i in result)
