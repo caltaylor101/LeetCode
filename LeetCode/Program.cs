@@ -5,7 +5,7 @@ using System.Text;
 Day9 day = new Day9();
 
 
-InterviewPrepQuestions inter = new InterviewPrepQuestions();
+InterviewPrepPart2 inter = new InterviewPrepPart2();
 
 
 /*
@@ -34,7 +34,21 @@ TreeNode node3 = new TreeNode(3, node6, node7);
 TreeNode node2 = new TreeNode(2, node4, node5);
 TreeNode node1 = new TreeNode(1, node2, node3);
 
+IList<IList<int>> insertList = new List<IList<int>>();
+insertList.Add(new List<int>() {1,2,3 });
+IList<IList<int>> result = inter.ThreeSum(new int[] { -1,0,1,2,-1,-4 });
 
-Console.WriteLine( inter.MaxArea(new int[] { 1, 1 }));
+int counter = 0;
+foreach (var i in result)
+{
+    counter++;
+
+    foreach (var k in i)
+    {
+        Console.WriteLine(k);
+    }
+
+}
+Console.WriteLine("Counter: " + counter);
 
 
